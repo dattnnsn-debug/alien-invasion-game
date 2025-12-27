@@ -24,10 +24,10 @@ class Ship: #Клас для керування корабля
 
     def update(self):
         '''Оновити поточну позицію корабля на основі індикатора руху.'''
-        if self.moving_right:
-            '''Оновити значення ship.x, а не rect.'''
+        '''Оновити значення ship.x, а не rect.'''
+        if self.moving_right and self.rect.right < self.screen_rect.right:
             self.x += self.settings.ship_speed
-        if self.moving_left:
+        if self.moving_left and self.rect.left > 0:
             self.x -= self.settings.ship_speed
 
         '''Оновити об'єкт rect з self.x.'''
