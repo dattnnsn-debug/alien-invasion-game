@@ -6,8 +6,6 @@ from settings import Settings
 
 from ship import Ship
 
-from space_character import Space
-
 from bullet import Bullet
 
 
@@ -26,14 +24,13 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         self.bg_color = (135, 206, 235)
 
         self.ship = Ship(self)
-        self.space = Space(self)
         self.bullets = pygame.sprite.Group()
 
     def run_game(self): #Розпочати головний цикл гри.
         while True:
             self._check_events()
             self.ship.update()
-            self.bullets.update()
+            self._update_bullets()
             self._update_screen()
 
     def _check_events(self):
@@ -67,14 +64,22 @@ class Alien_invasion: #Загальний клас, що керує ресурс
 
     def _fire_bullet(self):
         '''Створи нову кулю та додай її до групи куль'''
-        new_bullet = Bullet(self)
-        self.bullets.add(new_bullet)
+        if len(self.bullets) < self.settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
 
+    def _update_bullets(self):
+        '''ОНовити позиції куль та позбавитися старих куль'''
+        self.bullets.update()
+
+        '''Позбавитися куль, що зникли'''
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <=0:
+                self.bullets.remove(bullet)
 
     def _update_screen(self):
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
-        self.space.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
 
