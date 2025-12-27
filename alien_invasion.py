@@ -4,6 +4,8 @@ import pygame
 
 from settings import Settings
 
+from ship import Ship
+
 class Alien_invasion: #Загальний клас, що керує ресурсами на поведінкою гри.'''
 
     def __init__(self):#Ініціалізувати гру, створити ресурс гри
@@ -17,6 +19,8 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         #Задати колір фону
         self.bg_color = (230, 230, 230)
 
+        self.ship = Ship(self)
+
     def run_game(self): #Розпочати головний цикл гри.
         while True:
             #Слідкувати за подіями миші та клавіатури
@@ -26,6 +30,7 @@ class Alien_invasion: #Загальний клас, що керує ресурс
 
             #Наново перемалювати екран на кожній ітерації циклу
             self.screen.fill(self.settings.bg_color)
+            self.ship.blitme()
 
             #Показати останній намальований екран.
             pygame.display.flip()
