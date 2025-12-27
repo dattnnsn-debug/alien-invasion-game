@@ -1,6 +1,7 @@
 import pygame
 
-input pygame
+import pygame
+
 from pygame.sprite import Sprite
 
 class Bullet(Sprite):
@@ -13,8 +14,9 @@ class Bullet(Sprite):
         self.color = self.settings.bullet_color
 
         '''Створити тест кулі у (0, 0) та задати правильну позицію'''
-        self.rect = pygame.Rect(0, 0, self.settings.bullet_width, self.settings.bullet_height)
-        self.rect.midtop = ai_game.ship_rect.midtop
+        self.rect = pygame.Rect(0, 0, self.settings.bullet_width,
+            self.settings.bullet_height)
+        self.rect.midtop = ai_game.ship.rect.midtop
 
         '''Зберігати позицію кулі , як десяткове значення'''
         self.y = float(self.rect.y)
@@ -24,7 +26,7 @@ class Bullet(Sprite):
         '''Оновити десяткову позицію кулі.'''
         self.y -= self.settings.bullet_speed
         '''ОНовити позицію rect'''
-        self.rect.y += self.y
+        self.rect.y = self.y
 
     def draw_bullet(self):
         '''Намалювати кулю не екрані.'''

@@ -5,7 +5,11 @@ import pygame
 from settings import Settings
 
 from ship import Ship
+
 from space_character import Space
+
+from bullet import Bullet
+
 
 class Alien_invasion: #Загальний клас, що керує ресурсами на поведінкою гри.'''
 
@@ -29,6 +33,7 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         while True:
             self._check_events()
             self.ship.update()
+            self.bullets.update()
             self._update_screen()
 
     def _check_events(self):
@@ -51,6 +56,8 @@ class Alien_invasion: #Загальний клас, що керує ресурс
             self.ship.moving_left = True
         elif event.key == pygame.K_q:
             sys.exit()
+        elif event.key == pygame.K_SPACE:
+            self._fire_bullet()
 
     def _check_keyup_events(self, event):
         if event.key == pygame.K_RIGHT:
@@ -58,11 +65,18 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
 
+    def _fire_bullet(self):
+        '''Створи нову кулю та додай її до групи куль'''
+        new_bullet = Bullet(self)
+        self.bullets.add(new_bullet)
+
 
     def _update_screen(self):
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
         self.space.blitme()
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
 
         #Показати останній намальований екран.
         pygame.display.flip()

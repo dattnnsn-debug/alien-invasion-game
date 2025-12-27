@@ -2,7 +2,7 @@ class Settings(object): #Клас для збереження всіх нала�
     def __init__(self): #Ініціалізувати налаштування гри.
         self.screen_width = 1200
         self.screen_height = 800
-        self.bg_color = (230, 230, 230)
+        self.bg_color = (135, 206, 235)
         '''Налаштування корабля'''
         self.ship_speed = 1.5
         '''Налаштування кулі'''
