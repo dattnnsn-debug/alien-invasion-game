@@ -8,7 +8,7 @@ class Ship: #Клас для керування корабля
         self.screen_rect = ai_game.screen.get_rect()
 
         '''Завантажити зображення корабля та отримати його текст'''
-        self.image = pygame.image.load('images/ship.bmp')
+        self.image = pygame.image.load('images/ship.png')
         self.rect = self.image.get_rect()
 
         '''Створювати кожен новий корабель внизу екрана, по центру.'''
