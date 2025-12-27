@@ -22,8 +22,8 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         self.bg_color = (135, 206, 235)
 
         self.ship = Ship(self)
-
         self.space = Space(self)
+        self.bullets = pygame.sprite.Group()
 
     def run_game(self): #Розпочати головний цикл гри.
         while True:
