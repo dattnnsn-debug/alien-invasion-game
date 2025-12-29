@@ -85,6 +85,29 @@ class Alien_invasion: #Загальний клас, що керує ресурс
     def _create_fleet(self):
         '''Створити злот прибульця з 1 кораблем'''
         alien = Alien(self)
+        alien_width, alien_height = alien.rect.size
+        available_space_x = self.settings.screen_width - (2 * alien_width)
+        number_aliens_x = available_space_x // (2 * alien_width)
+
+        '''Визначити яка кількість рядів прибульців поміщається на екрані.'''
+        ship_height = self.ship.rect.height
+        available_space_y = (self.settings.screen_height -
+                             (3 * alien_height) - ship_height)
+        numer_rows = available_space_y // (2 * alien_height)
+
+        '''Створити повний флот прибульців'''
+        for row_number in range(numer_rows):
+            for alien_number in range(number_aliens_x):
+                self._create_alien(alien_number, row_number)
+
+    def _create_alien(self, alien_number, row_number):
+
+        '''Сторити прибульця і поставити його до ряду'''
+        alien = Alien(self)
+        alien_width, alien_height = alien.rect.size
+        alien.x = alien_width + 2 * alien_width * alien_number
+        alien.rect.x = alien.x
+        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
 
     def _update_screen(self):
