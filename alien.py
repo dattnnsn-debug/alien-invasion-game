@@ -1,6 +1,7 @@
 import pygame
 from pygame.sprite import Sprite
 
+
 class Alien(Sprite):
     '''Клас , що представляє одного прибульця від флоту'''
     def __init__(self, ai_game):
@@ -22,6 +23,7 @@ class Alien(Sprite):
         screen_rect = self.screen.get_rect()
         if self.rect.right >= screen_rect.right or self.rect.left <= 0:
             return True
+        return False
 
     def update(self):
         '''Пересунути прибульця праворуч чи ліворуч'''
