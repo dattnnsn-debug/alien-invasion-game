@@ -5,7 +5,7 @@ class Settings(object): #Клас для збереження всіх нала�
         self.bg_color = (135, 206, 235)
         '''Налаштування корабля'''
         self.ship_speed = 1.5
-        self.sheep_limit = 3
+        self.ship_limit = 3
         '''Налаштування кулі'''
         self.bullet_speed = 1.5
         self.bullet_width = 3

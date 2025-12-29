@@ -38,12 +38,17 @@ class Alien_invasion: #Загальний клас, що керує ресурс
 
         self._create_fleet()
 
+        '''Розпочати гру в активиному стані'''
+        self.game_active = True
+
     def run_game(self): #Розпочати головний цикл гри.
         while True:
             self._check_events()
-            self.ship.update()
-            self._update_bullets()
-            self._update_aliens()
+            if(self.stats.game_active):
+                self.ship.update()
+                self._update_bullets()
+                self._update_aliens()
+
             self._update_screen()
 
     def _check_events(self):
@@ -164,18 +169,15 @@ class Alien_invasion: #Загальний клас, що керує ресурс
     def _ship_hit(self):
         '''Реагуваня на зіткнення корабля з прибульцем
         Зменшити ship left'''
-        self.stats.ships_left -= 1
-
-        '''Позбавитися надлишку прибульців та куль'''
-        self.aliens.empty()
-        self.bullets.empty()
-
-        '''Створити новий флот та відцентрувати корабель'''
-        self._create_fleet()
-        self.ship.center_ship()
-
-        '''Пауза'''
-        sleep(0.5)
+        if self.stats.ships_left > 0:
+            self.stats.ships_left -= 1
+            self.aliens.empty()
+            self.bullets.empty()
+            self._create_fleet()
+            self.ship.center_ship()
+            sleep(0.5)
+        else:
+            self.stats.game_active = False
 
     def _check_aliens_bottom(self):
         '''Перевіряти, чи не досяг якийсь прибулець нижнього краю екрану'''
