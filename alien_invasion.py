@@ -88,6 +88,13 @@ class Alien_invasion: #Загальний клас, що керує ресурс
             if bullet.rect.bottom <=0:
                 self.bullets.remove(bullet)
 
+        self._check_bullet_alien_collisions()
+
+    def _check_bullet_alien_collisions(self):
+        '''Реакція на зіткнення куль з прибульцями
+        Видалити всі кулі та прибульців, що зіткнулися'''
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+
         if not self.aliens:
             '''Знищити кулі та створити новий флот'''
             self.bullets.empty()
@@ -97,6 +104,10 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         '''Перевірити чи флот знаходиться на краю, тоді оновити позиції всіх прибульців флоту'''
         self._check_fleet_edges()
         self.aliens.update()
+
+        '''Шукати зіткнення куль з прибульцями'''
+        if pygame.sprite.spritecollideany(self.ship, self.aliens):
+            print("Ship hit!!!")
 
     def _create_fleet(self):
         '''Створити злот прибульця з 1 кораблем'''
