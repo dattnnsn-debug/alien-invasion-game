@@ -8,6 +8,8 @@ from ship import Ship
 
 from bullet import Bullet
 
+from alien import Alien
+
 
 class Alien_invasion: #Загальний клас, що керує ресурсами на поведінкою гри.'''
 
@@ -25,6 +27,9 @@ class Alien_invasion: #Загальний клас, що керує ресурс
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
+        self.aliens = pygame.sprite.Group()
+
+        self._create_fleet()
 
     def run_game(self): #Розпочати головний цикл гри.
         while True:
@@ -77,11 +82,17 @@ class Alien_invasion: #Загальний клас, що керує ресурс
             if bullet.rect.bottom <=0:
                 self.bullets.remove(bullet)
 
+    def _create_fleet(self):
+        '''Створити злот прибульця з 1 кораблем'''
+        alien = Alien(self)
+        self.aliens.add(alien)
+
     def _update_screen(self):
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+        self.aliens.draw(self.screen)
 
         #Показати останній намальований екран.
         pygame.display.flip()
