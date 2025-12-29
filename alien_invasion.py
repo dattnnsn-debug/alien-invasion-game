@@ -36,6 +36,7 @@ class Alien_invasion: #Загальний клас, що керує ресурс
             self._check_events()
             self.ship.update()
             self._update_bullets()
+            self._update_aliens()
             self._update_screen()
 
     def _check_events(self):
@@ -81,6 +82,10 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <=0:
                 self.bullets.remove(bullet)
+
+    def _update_aliens(self):
+        '''Оновити позиції всіх прибульців у флоті'''
+        self.aliens.update()
 
     def _create_fleet(self):
         '''Створити злот прибульця з 1 кораблем'''

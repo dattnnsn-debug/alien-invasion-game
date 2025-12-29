@@ -11,3 +11,7 @@ class Settings(object): #Клас для збереження всіх нала�
         self.bullet_height = 15
         self.bullet_color = (60, 60, 60)
         self.bullets_allowed = 3
+        '''Налаштування прибульця'''
+        self.alien_speed = 1.0
+        '''fleet_direction 1 означає напрямок руху праворуч; -1 -- ліворуч'''
+        self.fleet_direction = 1
