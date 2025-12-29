@@ -13,5 +13,6 @@ class Settings(object): #Клас для збереження всіх нала�
         self.bullets_allowed = 3
         '''Налаштування прибульця'''
         self.alien_speed = 1.0
+        self.fleet_drop_speed = 10
         '''fleet_direction 1 означає напрямок руху праворуч; -1 -- ліворуч'''
         self.fleet_direction = 1
