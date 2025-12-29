@@ -88,6 +88,11 @@ class Alien_invasion: #Загальний клас, що керує ресурс
             if bullet.rect.bottom <=0:
                 self.bullets.remove(bullet)
 
+        if not self.aliens:
+            '''Знищити кулі та створити новий флот'''
+            self.bullets.empty()
+            self._create_fleet()
+
     def _update_aliens(self):
         '''Перевірити чи флот знаходиться на краю, тоді оновити позиції всіх прибульців флоту'''
         self._check_fleet_edges()
