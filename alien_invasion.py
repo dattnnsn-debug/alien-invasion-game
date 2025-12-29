@@ -78,6 +78,11 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         '''ОНовити позиції куль та позбавитися старих куль'''
         self.bullets.update()
 
+        '''Перевірити чи якась із куль не влучила у прибульця.
+        Якщо влучила, позбравитися кулі і прибульця'''
+
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+
         '''Позбавитися куль, що зникли'''
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <=0:
