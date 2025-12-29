@@ -1,8 +1,12 @@
 import sys
 
+from time import sleep
+
 import pygame
 
 from settings import Settings
+
+from game_stats import GameStats
 
 from ship import Ship
 
@@ -21,6 +25,9 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         self.settings.screen_height = self.screen.get_rect().height
 
         pygame.display.set_caption('Alien Invasion')
+
+        '''Створити екземпляр для збереження ігрової статистики'''
+        self.stats = GameStats(self)
 
         #Задати колір фону
         self.bg_color = (135, 206, 235)
@@ -107,7 +114,10 @@ class Alien_invasion: #Загальний клас, що керує ресурс
 
         '''Шукати зіткнення куль з прибульцями'''
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
-            print("Ship hit!!!")
+            self._ship_hit()
+
+            '''Шукати, чи котрийсь із прибульців досяг нижнього краю екрану'''
+        self._check_aliens_bottom()
 
     def _create_fleet(self):
         '''Створити злот прибульця з 1 кораблем'''
@@ -150,6 +160,32 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         for alien in self.aliens.sprites():
             alien.rect.y += self.settings.fleet_drop_speed
         self.settings.fleet_direction *= -1
+
+    def _ship_hit(self):
+        '''Реагуваня на зіткнення корабля з прибульцем
+        Зменшити ship left'''
+        self.stats.ships_left -= 1
+
+        '''Позбавитися надлишку прибульців та куль'''
+        self.aliens.empty()
+        self.bullets.empty()
+
+        '''Створити новий флот та відцентрувати корабель'''
+        self._create_fleet()
+        self.ship.center_ship()
+
+        '''Пауза'''
+        sleep(0.5)
+
+    def _check_aliens_bottom(self):
+        '''Перевіряти, чи не досяг якийсь прибулець нижнього краю екрану'''
+        screen_rect = self.screen.get_rect()
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom >= screen_rect.bottom:
+                '''Зреагувати так, ніби корабель підбито'''
+                self._ship_hit()
+                break
+
 
     def _update_screen(self):
         self.screen.fill(self.settings.bg_color)
