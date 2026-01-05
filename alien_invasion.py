@@ -65,7 +65,17 @@ class Alien_invasion: #Загальний клас, що керує ресурс
     def _check_play_button(self, mouse_pos):
         '''Розпочати нову гру, коли користувач натисне кнопку play'''
         if self.play_button.rect.collidepoint(mouse_pos):
+            '''Анулювати ігрову статистику'''
+            self.stats.reset_stats()
             self.stats.game_active = True
+
+            '''Позбавитися надлишку прибульців і куль'''
+            self.aliens.empty()
+            self.bullets.empty()
+
+            '''Створити новий флот та відцентрувати корабель'''
+            self._create_fleet()
+            self.ship.center_ship()
 
     def _check_keydown_events(self, event):
         '''Реагування на натискання клавіш'''
