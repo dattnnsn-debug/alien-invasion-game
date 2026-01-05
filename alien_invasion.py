@@ -129,6 +129,7 @@ class Alien_invasion: #Загальний клас, що керує ресурс
             '''Знищити кулі та створити новий флот'''
             self.bullets.empty()
             self._create_fleet()
+            self.settings.increase_speed()
 
     def _update_aliens(self):
         '''Перевірити чи флот знаходиться на краю, тоді оновити позиції всіх прибульців флоту'''
