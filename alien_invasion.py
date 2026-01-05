@@ -1,19 +1,12 @@
 import sys
-
 from time import sleep
-
 import pygame
-
 from settings import Settings
-
 from game_stats import GameStats
-
+from button import Button
 from ship import Ship
-
 from bullet import Bullet
-
 from alien import Alien
-
 
 class Alien_invasion: #Загальний клас, що керує ресурсами на поведінкою гри.'''
 
@@ -37,6 +30,9 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         self.aliens = pygame.sprite.Group()
 
         self._create_fleet()
+
+        '''Створити кнопку play'''
+        self.play_button = Button(self, "Play")
 
         '''Розпочати гру в активиному стані'''
         self.game_active = True
@@ -62,6 +58,14 @@ class Alien_invasion: #Загальний клас, що керує ресурс
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
 
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                self._check_play_button(mouse_pos)
+
+    def _check_play_button(self, mouse_pos):
+        '''Розпочати нову гру, коли користувач натисне кнопку play'''
+        if self.play_button.rect.collidepoint(mouse_pos):
+            self.stats.game_active = True
 
     def _check_keydown_events(self, event):
         '''Реагування на натискання клавіш'''
@@ -195,6 +199,10 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
+
+        '''Намалюй кнопку play, якщо гра неактивна'''
+        if not self.stats.game_active:
+            self.play_button.draw_button()
 
         #Показати останній намальований екран.
         pygame.display.flip()
