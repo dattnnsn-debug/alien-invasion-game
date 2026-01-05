@@ -78,6 +78,9 @@ class Alien_invasion: #Загальний клас, що керує ресурс
             self._create_fleet()
             self.ship.center_ship()
 
+            '''Приховати курсор миші'''
+            pygame.mouse.set_visible(False)
+
     def _check_keydown_events(self, event):
         '''Реагування на натискання клавіш'''
         if event.key == pygame.K_RIGHT:
@@ -193,6 +196,7 @@ class Alien_invasion: #Загальний клас, що керує ресурс
             sleep(0.5)
         else:
             self.stats.game_active = False
+            pygame.mouse.set_visible(True)
 
     def _check_aliens_bottom(self):
         '''Перевіряти, чи не досяг якийсь прибулець нижнього краю екрану'''
