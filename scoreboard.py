@@ -24,8 +24,8 @@ class Scoreboard:
                                             self.text_color, self.settings.bg_color)
         '''Показати рахунок у верхньому правому куту екрана'''
         self.score_rect = self.score_image.get_rect()
-        self.score_rect_right = self.score_rect.right - 20
-        self.score_rect_top = 20
+        self.score_rect.right = self.screen_rect.right - 20
+        self.score_rect.top = 20
 
     def show_score(self):
         '''Показати рахунок на екрані'''
