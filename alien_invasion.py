@@ -78,6 +78,7 @@ class Alien_invasion: #Загальний клас, що керує ресурс
             self.stats.game_active = True
             '''Скодиаємо рахунок'''
             self.sb.prep_score()
+            self.sb.prep_level()
 
             '''Позбавитися надлишку прибульців і куль'''
             self.aliens.empty()
@@ -139,6 +140,10 @@ class Alien_invasion: #Загальний клас, що керує ресурс
             self.bullets.empty()
             self._create_fleet()
             self.settings.increase_speed()
+
+            '''Збільшити рівень'''
+            self.stats.level += 1
+            self.sb.prep_level()
 
     def _update_aliens(self):
         '''Перевірити чи флот знаходиться на краю, тоді оновити позиції всіх прибульців флоту'''
