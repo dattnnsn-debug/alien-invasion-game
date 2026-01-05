@@ -76,6 +76,8 @@ class Alien_invasion: #Загальний клас, що керує ресурс
 
             '''Запускаємо нову гру'''
             self.stats.game_active = True
+            '''Скодиаємо рахунок'''
+            self.sb.prep_score()
 
             '''Позбавитися надлишку прибульців і куль'''
             self.aliens.empty()
@@ -114,12 +116,6 @@ class Alien_invasion: #Загальний клас, що керує ресурс
     def _update_bullets(self):
         '''ОНовити позиції куль та позбавитися старих куль'''
         self.bullets.update()
-
-        '''Перевірити чи якась із куль не влучила у прибульця.
-        Якщо влучила, позбравитися кулі і прибульця'''
-
-        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
-
         '''Позбавитися куль, що зникли'''
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <=0:
@@ -131,6 +127,12 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         '''Реакція на зіткнення куль з прибульцями
         Видалити всі кулі та прибульців, що зіткнулися'''
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+
+        if collisions:
+            for aliens in collisions.values():
+                self.stats.score += self.settings.alien_points * len(aliens)
+            self.sb.prep_score()
+            self.sb.check_high_score()
 
         if not self.aliens:
             '''Знищити кулі та створити новий флот'''

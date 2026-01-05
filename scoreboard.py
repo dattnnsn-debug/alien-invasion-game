@@ -16,10 +16,12 @@ class Scoreboard:
 
         '''Підготувати зображення з початковим рахунком.'''
         self.prep_score()
+        self.prep_high_score()
 
     def prep_score(self):
         '''Перетворити рахунок на зображення.'''
-        score_str = str(self.stats.score)
+        rounded_score = round(self.stats.score, -1)
+        score_str = "{:,}".format(rounded_score)
         self.score_image = self.font.render(score_str, True,
                                             self.text_color, self.settings.bg_color)
         '''Показати рахунок у верхньому правому куту екрана'''
@@ -29,4 +31,24 @@ class Scoreboard:
 
     def show_score(self):
         '''Показати рахунок на екрані'''
+        self.prep_score()
         self.screen.blit(self.score_image, self.score_rect)
+        self.screen.blit(self.high_score_image, self.high_score_rect)
+
+    def prep_high_score(self):
+        '''Згенерувати рекорд у зображення'''
+        high_score = round(self.stats.high_score, -1)
+        high_score_str = "{:,}".format(high_score)
+        self.high_score_image = self.font.render(high_score_str, True,
+                                                 self.text_color, self.settings.bg_color)
+
+        '''Відцентрувати ряд по горизонталі'''
+        self.high_score_rect = self.high_score_image.get_rect()
+        self.high_score_rect.centerx = self.screen_rect.centerx
+        self.high_score_rect.top = self.score_rect.top
+
+    def check_high_score(self):
+        '''Перевірити чи встановлено новий рекорд.'''
+        if self.stats.score > self.stats.high_score:
+            self.stats.high_score = self.stats.score
+            self.prep_high_score()
