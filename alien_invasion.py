@@ -79,6 +79,7 @@ class Alien_invasion: #Загальний клас, що керує ресурс
             '''Скодиаємо рахунок'''
             self.sb.prep_score()
             self.sb.prep_level()
+            self.sb.prep_ships()
 
             '''Позбавитися надлишку прибульців і куль'''
             self.aliens.empty()
@@ -204,6 +205,9 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         Зменшити ship left'''
         if self.stats.ships_left > 0:
             self.stats.ships_left -= 1
+            '''Оновити кількість життів'''
+            print(f"🚀 Життів: {self.stats.ships_left}")
+            self.sb.prep_ships()
             self.aliens.empty()
             self.bullets.empty()
             self._create_fleet()
