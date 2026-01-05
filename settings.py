@@ -4,6 +4,7 @@ class Settings(object): #Клас для збереження всіх нала�
         self.screen_height = 800
         self.bg_color = (135, 206, 235)
         '''Налаштування корабля'''
+        self.ship_speed = 1.5
         self.ship_limit = 3
         '''Налаштування кулі'''
         self.bullet_width = 3

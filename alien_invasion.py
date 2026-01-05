@@ -3,6 +3,7 @@ from time import sleep
 import pygame
 from settings import Settings
 from game_stats import GameStats
+from scoreboard import Scoreboard
 from button import Button
 from ship import Ship
 from bullet import Bullet
@@ -19,8 +20,10 @@ class Alien_invasion: #Загальний клас, що керує ресурс
 
         pygame.display.set_caption('Alien Invasion')
 
-        '''Створити екземпляр для збереження ігрової статистики'''
+        '''Створити екземпляр для збереження ігрової статистики
+        та табло на екрані'''
         self.stats = GameStats(self)
+        self.sb = Scoreboard(self)
 
         #Задати колір фону
         self.bg_color = (135, 206, 235)
@@ -35,16 +38,15 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         self.play_button = Button(self, "Play")
 
         '''Розпочати гру в активиному стані'''
-        self.game_active = True
+        '''self.game_active = True'''
 
     def run_game(self): #Розпочати головний цикл гри.
         while True:
             self._check_events()
-            if(self.stats.game_active):
+            if self.stats.game_active:
                 self.ship.update()
                 self._update_bullets()
                 self._update_aliens()
-
             self._update_screen()
 
     def _check_events(self):
@@ -66,8 +68,14 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         '''Розпочати нову гру, коли користувач натисне кнопку play'''
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.stats.game_active:
-            '''Анулювати ігрову статистику'''
+            ''' Скидаємо статистику'''
+            self.stats.reset_stats()
+
+            '''Скидаємо динамічні налаштування'''
             self.settings.initialize_dynamic_settings()
+
+            '''Запускаємо нову гру'''
+            self.stats.game_active = True
 
             '''Позбавитися надлишку прибульців і куль'''
             self.aliens.empty()
@@ -214,6 +222,9 @@ class Alien_invasion: #Загальний клас, що керує ресурс
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
+
+        '''Намалювати інформацію про рахунок'''
+        self.sb.show_score()
 
         '''Намалюй кнопку play, якщо гра неактивна'''
         if not self.stats.game_active:
